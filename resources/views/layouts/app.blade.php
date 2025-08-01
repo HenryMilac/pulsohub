@@ -20,7 +20,7 @@
         @endif
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] dark:text-[#FDFDFC] min-h-screen">
-        <nav class="flex justify-between items-center p-5 w-full">
+        <nav class="flex justify-between items-center p-5 w-full border-b">
             <a href="/">Devstagram</a>
             <div class="flex gap-3">
                 <a href="/login">Login</a>
@@ -31,7 +31,7 @@
         <main>
             @yield('contenido')
         </main>
-        <footer>
+        <footer class="text-center p-10">
             Derechos reservados - {{ date('Y') }}
         </footer>
     </body>
