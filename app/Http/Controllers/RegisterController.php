@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -17,6 +19,11 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:20|unique:users',
             'password' => 'required|string|min:4|confirmed',
         ]);
-        dd($request->all());
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+        return redirect()->route('home');
     }
 }
