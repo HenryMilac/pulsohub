@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
@@ -24,6 +25,7 @@ class RegisterController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ]);
+        Auth::attempt($request->only('email', 'password'));
         return redirect()->route('home');
     }
 }
