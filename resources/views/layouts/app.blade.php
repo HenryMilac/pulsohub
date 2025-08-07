@@ -23,8 +23,16 @@
         <nav class="flex justify-between items-center p-5 w-full border-b">
             <a href="/">Devstagram</a>
             <div class="flex gap-3">
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
+                @auth
+                    <form action="{{route('logout')}}" method="POST">
+                        @csrf
+                        <button type="submit">Cerrar Sesión</button>
+                    </form>
+                @endauth
+                @guest
+                    <a href="/login">Login</a>
+                    <a href="/register">Register</a>
+                @endguest
             </div>
         </nav>
 
