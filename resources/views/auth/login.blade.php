@@ -11,9 +11,9 @@
         @error('password')<p class="text-red-500">{{$message}}</p>@enderror
         <div class="flex items-center gap-2">
             <input type="checkbox" name="remember" id="remember" class="w-5 h-5">
-            <label for="remember">Recordar sesión</label>
+            <label for="remember" class="cursor-pointer">Recordar sesión</label>
         </div>
-        <button type="submit" class="bg-blue-700 text-white p-2 rounded-md">Iniciar sesión</button>
+        <button type="submit" class="bg-blue-700 text-white p-2 rounded-md cursor-pointer">Iniciar sesión</button>
     </form>
 </div>
 @endsection

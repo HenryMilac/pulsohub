@@ -26,6 +26,6 @@ class RegisterController extends Controller
             'password' => $request->password,
         ]);
         Auth::attempt($request->only('email', 'password'));
-        return redirect()->route('home');
+        return redirect()->route('user.name', Auth::user()->name);
     }
 }

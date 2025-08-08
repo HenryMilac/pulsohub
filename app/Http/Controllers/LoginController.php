@@ -33,6 +33,6 @@ class LoginController extends Controller
             ])->withInput($request->only('email'));
         }
         
-        return redirect()->route('home');
+        return redirect()->route('user.name', Auth::user()->name);
     }
 }

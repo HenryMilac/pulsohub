@@ -21,12 +21,13 @@
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] dark:text-[#FDFDFC] min-h-screen">
         <nav class="flex justify-between items-center p-5 w-full border-b">
-            <a href="/">Devstagram</a>
+            <p>Devstagram</p>
             <div class="flex gap-3">
                 @auth
-                    <form action="{{route('logout')}}" method="POST">
+                    <form action="{{route('logout')}}" method="POST" class="flex gap-3">
                         @csrf
-                        <button type="submit">Cerrar Sesión</button>
+                        <p>Hola {{auth()->user()->name}}</p>
+                        <button type="submit" class="cursor-pointer">Cerrar Sesión</button>
                     </form>
                 @endauth
                 @guest
