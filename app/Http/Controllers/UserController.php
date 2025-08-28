@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function index(User $user)
     {
-        return view('home', [
+        return view('profile', [
             'user' => $user,
         ]);
     }
