@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,5 +35,13 @@ class PostController extends Controller
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['error' => 'Error al crear el post: ' . $e->getMessage()]);
         }
+    }
+
+    public function show(User $user, Post $post)
+    {
+        return view('posts.show', [
+            'user' => $user,
+            'post' => $post,
+        ]);
     }
 }

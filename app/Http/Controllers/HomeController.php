@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,9 +15,8 @@ class HomeController extends Controller
     {
         // Obtener el usuario autenticado
         $user = Auth::user();
-        
-        // Pasar el usuario a la vista
-        return view('home', compact('user'));
+        $posts = Post::latest()->paginate(20);
+        return view('home', compact('user', 'posts'));
     }
 
     /**

@@ -14,14 +14,26 @@
         </div>
         <div>
             <p class="text-xl mb-5">Publicaciones</p>
-            <div class="grid grid-cols-1 md:grid-cols-3">
-                <div class="border p-5">
-                    <p>Image</p>
-                    <p>Title</p>
-                    <p>Description</p>
-                    <p>Date</p>
+            @if ($posts->count() > 0)
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    @foreach ($posts as $post)
+                    <a href="{{ route('posts.show', [
+                        'user' => $post->user,
+                        'post' => $post
+                        ]) }}"
+                    >
+                        <img src="{{ asset('uploads/' . $post->image) }}" alt="{{ $post->title }}" class="w-full h-48 object-cover">
+                        <p>{{$post->title}}</p>
+                        <p>{{$post->description}}</p>
+                    </a>
+                    @endforeach
                 </div>
-            </div>
+                <div class="flex justify-center py-10">
+                    {{$posts->links('pagination::simple-tailwind')}}
+                </div>
+            @else
+                <p class="text-center">No tienes publicaciones aún</p>
+            @endif
         </div>
     </div>
 @endsection
