@@ -6,9 +6,11 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PostController extends Controller
 {
+    use AuthorizesRequests;
     public function index()
     {
         return view('posts.create');
@@ -43,5 +45,17 @@ class PostController extends Controller
             'user' => $user,
             'post' => $post,
         ]);
+    }
+
+    public function destroy(Post $post)
+    {
+        $this->authorize('delete', $post);
+        $post->delete();
+        // Delete image
+        $imagePath = public_path('uploads/' . $post->image);
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+        return redirect()->route('user.name', Auth::user())->with('success', 'Post eliminado exitosamente');
     }
 }

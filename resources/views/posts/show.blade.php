@@ -16,10 +16,19 @@
             <p class="">{{ $post->created_at->format('d/m/Y H:i') }}</p>
         </div>
         <p class="">{{ $post->description }}</p>
+        @auth
+        @if(auth()->id() === $post->user_id)
+        <form action="{{route('posts.destroy', $post)}}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="border p-2 cursor-pointer text-red-600">Eliminar Post</button>
+        </form>
+        @endif
+        @endauth
     </div>
     <div class="w-1/2">
         @auth
-        <div>
+        <div class="border p-5">
             <p>Agregar un comentario</p>
             <form action="{{route('comments.store')}}" method="POST" class="flex flex-col gap-5">
                 @csrf
@@ -42,7 +51,18 @@
                             <span class="font-medium">{{ $comment->user->name ?? 'Usuario' }}</span>
                             <span class="text-gray-500 text-sm ml-auto">{{ $comment->created_at->format('d/m/Y H:i') }}</span>
                         </div>
-                        <p>{{ $comment->comment }}</p>
+                        <div class="flex justify-between">
+                            <p>{{ $comment->comment }}</p>
+                            @auth
+                            @if(auth()->id() === $comment->user_id)
+                            <form action="{{ route('comments.destroy', $comment) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="ml-2 text-red-600 hover:underline cursor-pointer">Eliminar</button>
+                            </form>
+                            @endif
+                            @endauth
+                        </div>
                     </a>
                 @empty
                     <p class="text-gray-500">No hay comentarios aún.</p>

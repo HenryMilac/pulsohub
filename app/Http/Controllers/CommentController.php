@@ -23,10 +23,9 @@ class CommentController extends Controller
 
         return back()->with('success', 'Comentario agregado exitosamente');
     }
-
     public function destroy(Comment $comment)
     {
         $comment->delete();
-        return redirect()->route('posts.show', $comment->post);
+        return redirect()->route('posts.show', ['user' => $comment->post->user, 'post' => $comment->post]);
     }
 }

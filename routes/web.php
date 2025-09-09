@@ -23,6 +23,8 @@ Route::get('/{user:name}/posts/{post}', [PostController::class, 'show'])->name('
 Route::middleware('auth')->group(function () {
     Route::get('/posts/create', [PostController::class, 'index'])->name('posts.create');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
     Route::post('/images', [ImageController::class, 'store'])->name('images.store');
     Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 });
