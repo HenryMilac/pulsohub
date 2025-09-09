@@ -3,14 +3,33 @@
 @section('contenido')
 <div class="flex gap-5 my-10 relative">
     <a href="{{ route('home') }}" class="absolute top-0 left-0 bg-gray-700 text-white px-4 py-1 rounded-2xl">Atras</a>
+
+    {{-- Post Section --}}
     <div class="w-1/2">
         <img src="{{ asset('uploads/' . $post->image) }}" alt="{{ $post->title }}" class="w-full h-96 object-cover">
-        <a href="{{ route('user.name', $post->user) }}" class="flex items-center mb-6 cursor-pointer">
-            <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center mr-3">
-                <span class="">{{ substr($post->user->name ?? 'Usuario', 0, 1) }}</span>
-            </div>
-            <p class="">{{ $post->user->name ?? 'Usuario' }}</p>
-        </a>
+        <div class="flex justify-between items-center">
+            <a href="{{ route('user.name', $post->user) }}" class="flex items-center mb-6 cursor-pointer">
+                <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center mr-3">
+                    <span class="">{{ substr($post->user->name ?? 'Usuario', 0, 1) }}</span>
+                </div>
+                <p class="">{{ $post->user->name ?? 'Usuario' }}</p>
+            </a>
+            <form action="{{ route('likes.store', $post) }}" method="POST" class="flex items-center gap-3">
+                @csrf
+                <p>{{ $post->likes->count() }} likes</p>
+                @auth
+                    @php
+                        $userLike = $post->likes->where('user_id', auth()->id())->first();
+                    @endphp
+                    @if($userLike)
+                        <button type="submit" formaction="{{ route('likes.destroy', $userLike) }}" formmethod="POST" class="border px-2 cursor-pointer">Unlike</button>
+                        @method('DELETE')
+                    @else
+                        <button type="submit" class="border px-2 cursor-pointer">Like</button>
+                    @endif
+                @endauth
+            </form>
+        </div>
         <div class="flex justify-between">
             <h1 class="">{{ $post->title }}</h1>
             <p class="">{{ $post->created_at->format('d/m/Y H:i') }}</p>
@@ -26,6 +45,8 @@
         @endif
         @endauth
     </div>
+
+    {{-- Comments Section --}}
     <div class="w-1/2">
         @auth
         <div class="border p-5">

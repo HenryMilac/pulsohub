@@ -41,6 +41,9 @@ class PostController extends Controller
 
     public function show(User $user, Post $post)
     {
+        // Cargar las relaciones necesarias
+        $post->load(['likes', 'comments.user']);
+        
         return view('posts.show', [
             'user' => $user,
             'post' => $post,

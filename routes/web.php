@@ -8,6 +8,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -27,4 +28,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/images', [ImageController::class, 'store'])->name('images.store');
     Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+    Route::post('/likes/{post}', [LikeController::class, 'store'])->name('likes.store');
+    Route::delete('/likes/{like}', [LikeController::class, 'destroy'])->name('likes.destroy');
 });
