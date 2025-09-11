@@ -2,8 +2,19 @@
 
 @section('contenido')
     <div>
-        <p class="text-xl mb-5">Publicaciones de todos los usuarios</p>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div class="flex justify-around py-5">
+            <a href="{{ route('home', ['filter' => 'general']) }}" 
+               class="cursor-pointer px-4 py-2 {{ $filter === 'general' ? 'border-b-2' : '' }}">
+                General
+            </a>
+            @auth
+            <a href="{{ route('home', ['filter' => 'following']) }}" 
+               class="cursor-pointer px-4 py-2 {{ $filter === 'following' ? 'border-b-2' : '' }}">
+                Following
+            </a>
+            @endauth
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             @foreach ($posts as $post)
             <div>
                 <a href="{{ route('posts.show', [
