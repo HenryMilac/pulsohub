@@ -8,10 +8,14 @@
     <div class="w-1/2">
         <img src="{{ asset('uploads/' . $post->image) }}" alt="{{ $post->title }}" class="w-full h-96 object-cover">
         <div class="flex justify-between items-center">
-            <a href="{{ route('user.name', $post->user) }}" class="flex items-center mb-6 cursor-pointer">
-                <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center mr-3">
-                    <span class="">{{ substr($post->user->name ?? 'Usuario', 0, 1) }}</span>
-                </div>
+            <a href="{{ route('user.name', $post->user) }}" class="flex items-center mb-6 cursor-pointer gap-2">
+                @if($post->user->image)
+                    <img src="{{ asset('profileimages/' . $post->user->image) }}" alt="{{ $post->user->name }}" class="w-10 h-10 rounded-full object-cover">
+                @else
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-gray-500 text-lg border">
+                        {{ strtoupper(substr($post->user->name, 0, 1)) }}
+                    </div>
+                @endif
                 <p class="">{{ $post->user->name ?? 'Usuario' }}</p>
             </a>
             <form action="{{ route('likes.store', $post) }}" method="POST" class="flex items-center gap-3">
@@ -66,10 +70,16 @@
                 @forelse ($post->comments as $comment)
                     <a href="{{ route('user.name', $comment->user) }}" class="border p-2 cursor-pointer">
                         <div class="flex items-center">
-                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                                <span class="text-sm">{{ substr($comment->user->name ?? 'Usuario', 0, 1) }}</span>
+                            <div class="flex items-center gap-2">
+                                @if($comment->user && $comment->user->image)
+                                    <img src="{{ asset('profileimages/' . $comment->user->image) }}" alt="{{ $comment->user->name }}" class="w-10 h-10 rounded-full object-cover">
+                                @else
+                                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-gray-500 text-lg border">
+                                        {{ strtoupper(substr($comment->user->name ?? 'U', 0, 1)) }}
+                                    </div>
+                                @endif
+                                <span class="font-medium">{{ $comment->user->name ?? 'Usuario' }}</span>
                             </div>
-                            <span class="font-medium">{{ $comment->user->name ?? 'Usuario' }}</span>
                             <span class="text-gray-500 text-sm ml-auto">{{ $comment->created_at->format('d/m/Y H:i') }}</span>
                         </div>
                         <div class="flex justify-between">

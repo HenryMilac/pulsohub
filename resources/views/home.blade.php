@@ -11,9 +11,21 @@
                 ]) }}"
             >
                 <img src="{{ asset('uploads/' . $post->image) }}" alt="{{ $post->title }}" class="w-full h-56 object-cover">
-                <p>{{$post->user->name}}</p>
-                <p>{{$post->title}}</p>
-                <p>{{$post->description}}</p>
+                <div>
+                    <div class="flex items-center gap-2">
+                        @if($post->user->image)
+                            <img src="{{ asset('profileimages/' . $post->user->image) }}" alt="{{ $post->user->name }}" class="w-10 h-10 rounded-full object-cover">
+                        @else
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-gray-500 text-lg border">
+                                {{ strtoupper(substr($post->user->name, 0, 1)) }}
+                            </div>
+                        @endif
+                        <p>{{$post->user->name}}</p>
+
+                    </div>
+                    <p>{{$post->title}}</p>
+                    <p>{{$post->description}}</p>
+                </div>
             </a>
             @endforeach
         </div>

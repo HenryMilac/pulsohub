@@ -9,18 +9,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/register', [RegisterController::class, 'index'])->name('register');
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/register', [RegisterController::class, 'store'])->name('register');
-Route::post('/login', [LoginController::class, 'store'])->name('login');
-Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
-
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/{user:name}', [UserController::class, 'index'])->name('user.name');
-Route::get('/{user:name}/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 Route::middleware('auth')->group(function () {
     Route::get('/posts/create', [PostController::class, 'index'])->name('posts.create');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
@@ -30,4 +22,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     Route::post('/likes/{post}', [LikeController::class, 'store'])->name('likes.store');
     Route::delete('/likes/{like}', [LikeController::class, 'destroy'])->name('likes.destroy');
+    Route::get('/edit-profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/edit-profile', [ProfileController::class, 'update'])->name('profile.update');
 });
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/register', [RegisterController::class, 'store'])->name('register');
+Route::post('/login', [LoginController::class, 'store'])->name('login');
+Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/{user:name}/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/{user:name}', [UserController::class, 'index'])->name('user.name');
