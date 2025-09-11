@@ -20,8 +20,24 @@
                 @endif
                 @endauth
             </div>
-            <p>0 Seguidores</p>
-            <p>0 Siguiendo</p>
+            @auth
+            @if(auth()->id() !== $user->id)
+                @if($isFollowing)
+                    <form action="{{ route('users.unfollow', $user) }}" method="POST" class="">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="border px-2 py-1 cursor-pointer">Dejar de seguir</button>
+                    </form>
+                @else
+                    <form action="{{ route('users.follow', $user) }}" method="POST" class="">
+                        @csrf
+                        <button type="submit" class="border px-2 py-1 cursor-pointer">Seguir</button>
+                    </form>
+                @endif
+            @endif
+            @endauth
+            <p>{{ $user->followers()->count() }} @choice('Seguidor|Seguidores', $user->followers()->count())</p>
+            <p>{{ $user->following()->count() }} Siguiendo</p>
             <p>{{ $posts->count() }} Posts</p>
         </div>
     </div>

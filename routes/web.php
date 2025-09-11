@@ -8,6 +8,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/likes/{like}', [LikeController::class, 'destroy'])->name('likes.destroy');
     Route::get('/edit-profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('/edit-profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/{user:name}/follow', [FollowerController::class, 'store'])->name('users.follow');
+    Route::delete('/{user:name}/unfollow', [FollowerController::class, 'destroy'])->name('users.unfollow');
 });
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::get('/login', [LoginController::class, 'index'])->name('login');
