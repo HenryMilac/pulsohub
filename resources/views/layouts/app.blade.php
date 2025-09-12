@@ -20,6 +20,7 @@
             </style>
         @endif
         @stack('styles')
+        @livewireStyles
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] dark:text-[#FDFDFC] min-h-screen container mx-auto">
         <nav class="flex justify-between items-center py-5 w-full border-b">
@@ -43,5 +44,6 @@
         <main>
             @yield('contenido')
         </main>
+        @livewireScripts
     </body>
 </html>

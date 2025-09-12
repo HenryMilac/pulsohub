@@ -18,21 +18,7 @@
                 @endif
                 <p class="">{{ $post->user->name ?? 'Usuario' }}</p>
             </a>
-            <form action="{{ route('likes.store', $post) }}" method="POST" class="flex items-center gap-3">
-                @csrf
-                <p>{{ $post->likes->count() }} likes</p>
-                @auth
-                    @php
-                        $userLike = $post->likes->where('user_id', auth()->id())->first();
-                    @endphp
-                    @if($userLike)
-                        <button type="submit" formaction="{{ route('likes.destroy', $userLike) }}" formmethod="POST" class="border px-2 cursor-pointer">Unlike</button>
-                        @method('DELETE')
-                    @else
-                        <button type="submit" class="border px-2 cursor-pointer">Like</button>
-                    @endif
-                @endauth
-            </form>
+            <livewire:like-post :post="$post"/>
         </div>
         <div class="flex justify-between">
             <h1 class="">{{ $post->title }}</h1>
