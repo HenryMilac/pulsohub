@@ -11,8 +11,8 @@
     {{-- ----- Image Form: Title, Description --}}
     <form action="{{route('posts.store')}}" method="POST" class="flex flex-col gap-4 w-1/2">
         @csrf
-        <input type="text" name="title" placeholder="Titulo" class="border p-2 rounded-md @error('title') border-red-500 @enderror" value="{{old('title')}}">
-        @error('title')<p class="text-red-500">{{$message}}</p>@enderror
+        {{-- <input type="text" name="title" placeholder="Titulo" class="border p-2 rounded-md @error('title') border-red-500 @enderror" value="{{old('title')}}">
+        @error('title')<p class="text-red-500">{{$message}}</p>@enderror --}}
         <textarea name="description" placeholder="Descripcion" class="border p-2 @error('description') border-red-500 @enderror">{{old('description')}}</textarea>
         @error('description')<p class="text-red-500">{{$message}}</p>@enderror
         <input type="hidden" name="image" id="imageInput" value="{{old('image')}}">

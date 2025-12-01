@@ -19,21 +19,20 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string',
             'description' => 'required|string|max:100',
-            'image' => 'required|string',
+            'image' => 'nullable|string',
         ]);
-        
+
         try {
             $request->user()->posts()->create([
-                "title" => $request->title,
+                "title" => null,
                 "description" => $request->description,
-                "image" => $request->image,
+                "image" => $request->image ?? null,
                 "user_id" => Auth::id(),
             ]);
-            
+
             return redirect()->route('user.name', Auth::user())->with('success', 'Post creado exitosamente');
-            
+
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['error' => 'Error al crear el post: ' . $e->getMessage()]);
         }

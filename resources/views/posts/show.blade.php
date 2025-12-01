@@ -6,7 +6,9 @@
 
     {{-- Post Section --}}
     <div class="w-1/2">
-        <img src="{{ asset('uploads/' . $post->image) }}" alt="{{ $post->title }}" class="w-full h-96 object-cover">
+        @if($post->image)
+            <img src="{{ asset('uploads/' . $post->image) }}" alt="{{ $post->title }}" class="w-full h-96 object-cover">
+        @endif
         <div class="flex justify-between items-center">
             <a href="{{ route('user.name', $post->user) }}" class="flex items-center mb-6 cursor-pointer gap-2">
                 @if($post->user->image)

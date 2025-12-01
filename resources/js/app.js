@@ -38,21 +38,8 @@ const dropzone = new Dropzone('#imageDropzone', {
             this.options.dictDefaultMessage = "Imagen precargada: " + imageInput.value;
         }
         
-        // Interceptar el envío del formulario para preservar la imagen
-        const form = document.querySelector('form');
-        if (form) {
-            form.addEventListener('submit', (e) => {
-                // Prevenir el envío si no hay imagen
-                if (!imageInput || !imageInput.value) {
-                    e.preventDefault();
-                    alert('Por favor, selecciona una imagen antes de crear el post');
-                    return false;
-                }
-                
-                // Si hay imagen, permitir el envío normal
-                // La imagen ya está en el input hidden, así que se enviará con el formulario
-            });
-        }
+        // La imagen se enviará con el formulario si está presente en el input hidden
+        // No es necesario validar la presencia de imagen ya que es opcional
     }
 })
 
