@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-
+        {{-- TODO: Cambiar nombre de la app --}}
         <title>Laravel</title>
 
         <!-- Fonts -->
@@ -22,28 +22,14 @@
         @stack('styles')
         @livewireStyles
     </head>
-    <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] dark:text-[#FDFDFC] min-h-screen container mx-auto">
-        <nav class="flex justify-between items-center py-5 w-full border-b">
-            <a href="{{ route('home') }}">Devstagram</a>
-            <div class="flex gap-3">
-                @auth
-                <form action="{{route('logout')}}" method="POST" class="flex gap-3 items-center">
-                    @csrf
-                    <a href="{{route('posts.create')}}" class="border px-2 py-1 rounded-2xl">Crear Post</a>
-                    <a href="{{ auth()->check() ? route('user.name', auth()->user()) : '/login' }}">Hola {{auth()->user()->name}}</a>
-                    <button type="submit" class="cursor-pointer">Cerrar Sesión</button>
-                </form>
-                @endauth
-                @guest
-                    <a href="/login">Login</a>
-                    <a href="/register">Register</a>
-                @endguest
-            </div>
-        </nav>
+    <body class="bg-gray-100 text-gray-900 min-h-screen">
+        <div class="max-w-[700px] mx-auto">
+            <span class="sticky top-0 z-10">
+                <x-navbar />
 
-        <main>
-            @yield('contenido')
-        </main>
+            </span>
+            <main class="px-5 pb-10">@yield('contenido')</main>
+        </div>
         @livewireScripts
     </body>
 </html>

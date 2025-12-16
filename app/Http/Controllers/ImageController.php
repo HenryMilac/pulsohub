@@ -43,7 +43,7 @@ class ImageController extends Controller
             // Redimensionar la imagen
             $imageManager = ImageManager::gd();
             $imageServer = $imageManager->read($image);
-            $imageServer->cover(1000, 1000);
+            // $imageServer->cover(1000, 1000);
 
             // Guardar la imagen
             $imagePath = $uploadPath . '/' . $nameImage;

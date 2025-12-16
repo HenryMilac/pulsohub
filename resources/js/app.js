@@ -2,84 +2,135 @@ import Dropzone from 'dropzone';
 
 Dropzone.autoDiscover = false;
 
-const dropzone = new Dropzone('#imageDropzone', {
-    dictDefaultMessage: 'Arrastra y suelta una imagen aquí o haz click para cargar',
-    acceptedFiles: 'image/*',
-    maxFiles: 1,
-    addRemoveLinks: true,
-    dictRemoveFile: 'Eliminar archivo',
-    uploadMultiple: false,
-    url: '/images', // Cambiar a la ruta correcta para subir imágenes
-    paramName: "file",
-    maxFilesize: 5, // MB
-    headers: {
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-    },
-    init: function(){
-        // Verificar si hay una imagen precargada en el input hidden
-        const imageInput = document.getElementById('imageInput');
-        if (imageInput && imageInput.value) {
-            // Crear un mock file object para mostrar la imagen precargada
-            const mockFile = {
-                name: imageInput.value,
-                size: 0,
-                accepted: true,
-                status: Dropzone.ADDED,
-                dataURL: `/uploads/${imageInput.value}` // Asumiendo que las imágenes se guardan en /uploads/
-            };
-            
-            // Agregar la imagen al dropzone
-            this.emit('addedfile', mockFile);
-            this.emit('thumbnail', mockFile, mockFile.dataURL);
-            this.emit('complete', mockFile);
-            this.emit('success', mockFile, { filename: imageInput.value });
-            
-            // Marcar que ya no es el mensaje por defecto
-            this.options.dictDefaultMessage = "Imagen precargada: " + imageInput.value;
+// Initialize Dropzone
+const dropzoneElement = document.getElementById('imageDropzone');
+if (dropzoneElement) {
+    const dropzone = new Dropzone('#imageDropzone', {
+        acceptedFiles: 'image/*',
+        maxFiles: 1,
+        uploadMultiple: false,
+        url: '/images',
+        paramName: "file",
+        maxFilesize: 5, // MB
+        clickable: false, // Disable default click behavior
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
-        
-        // La imagen se enviará con el formulario si está presente en el input hidden
-        // No es necesario validar la presencia de imagen ya que es opcional
-    }
-})
+    });
 
-dropzone.on('sending', (file, xhr, formData) => {
-    console.log('Enviando archivo:', file.name);
-})
-
-dropzone.on('success', (file, response) => {
-    console.log('Imagen subida exitosamente:', response);
-    
-    // Guardar el nombre de la imagen en el input hidden del formulario de posts
+    // DOM Elements
+    const imageUploadBtn = document.getElementById('imageUploadBtn');
     const imageInput = document.getElementById('imageInput');
-    if (imageInput && response.filename) {
-        imageInput.value = response.filename;
-    }
-    
-    // Mostrar mensaje de éxito
-    dropzone.options.dictDefaultMessage = "Imagen subida: " + response.filename;
-})
+    const imageStatusText = document.getElementById('imageStatusText');
+    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+    const imagePreview = document.getElementById('imagePreview');
+    const removeImageBtn = document.getElementById('removeImageBtn');
 
-dropzone.on('error', (file, errorMessage, xhr) => {
-    console.error('Error al subir imagen:', errorMessage);
-    let message = "Error al subir la imagen";
-    
-    if (xhr && xhr.responseJSON) {
-        message = xhr.responseJSON.error || xhr.responseJSON.message || message;
-    }
-    
-    alert(message);
-})
+    // Click on icon button to open file selector
+    if (imageUploadBtn) {
+        imageUploadBtn.addEventListener('click', () => {
+            // Create a temporary file input
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            fileInput.style.display = 'none';
 
-dropzone.on('removedfile', (file) => {
-    console.log('Archivo eliminado');
-    
-    // Limpiar el input hidden cuando se elimina la imagen
-    const imageInput = document.getElementById('imageInput');
-    if (imageInput) {
-        imageInput.value = '';
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    dropzone.addFile(file);
+                }
+                document.body.removeChild(fileInput);
+            });
+
+            document.body.appendChild(fileInput);
+            fileInput.click();
+        });
     }
-    
-    // Restaurar mensaje original
-    dropzone.options.dictDefaultMessage = 'Arrastra y suelta una imagen aquí o haz click para cargar';
-})
+
+    // Handle file upload start
+    dropzone.on('addedfile', (file) => {
+        console.log('Archivo agregado:', file.name);
+        if (imageStatusText) {
+            imageStatusText.textContent = 'Subiendo...';
+        }
+    });
+
+    // Handle successful upload
+    dropzone.on('success', (file, response) => {
+        console.log('Imagen subida exitosamente:', response);
+
+        // Save filename to hidden input
+        if (imageInput && response.filename) {
+            imageInput.value = response.filename;
+        }
+
+        // Update button text
+        if (imageStatusText) {
+            imageStatusText.textContent = 'Imagen agregada';
+        }
+
+        // Show image preview
+        if (imagePreviewContainer && imagePreview) {
+            imagePreview.src = response.path || `/uploads/${response.filename}`;
+            imagePreviewContainer.classList.remove('hidden');
+        }
+
+        // Remove file from dropzone (we handle preview manually)
+        dropzone.removeFile(file);
+    });
+
+    // Handle upload error
+    dropzone.on('error', (file, errorMessage) => {
+        console.error('Error al subir imagen:', errorMessage);
+
+        let message = "Error al subir la imagen";
+        if (typeof errorMessage === 'object' && errorMessage.error) {
+            message = errorMessage.error;
+        } else if (typeof errorMessage === 'string') {
+            message = errorMessage;
+        }
+
+        alert(message);
+
+        // Reset button text
+        if (imageStatusText) {
+            imageStatusText.textContent = 'Agregar imagen';
+        }
+
+        // Remove file from dropzone
+        dropzone.removeFile(file);
+    });
+
+    // Handle remove image button
+    if (removeImageBtn) {
+        removeImageBtn.addEventListener('click', () => {
+            // Clear hidden input
+            if (imageInput) {
+                imageInput.value = '';
+            }
+
+            // Hide preview
+            if (imagePreviewContainer) {
+                imagePreviewContainer.classList.add('hidden');
+            }
+
+            // Reset button text
+            if (imageStatusText) {
+                imageStatusText.textContent = 'Agregar imagen';
+            }
+        });
+    }
+
+    // Check for existing image on page load (for edit mode)
+    if (imageInput && imageInput.value) {
+        const filename = imageInput.value;
+        if (imagePreviewContainer && imagePreview) {
+            imagePreview.src = `/uploads/${filename}`;
+            imagePreviewContainer.classList.remove('hidden');
+        }
+        if (imageStatusText) {
+            imageStatusText.textContent = 'Imagen agregada';
+        }
+    }
+}

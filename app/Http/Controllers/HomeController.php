@@ -20,14 +20,19 @@ class HomeController extends Controller
         if ($filter === 'following') {
             // Obtener IDs de usuarios que sigue el usuario actual
             $followingIds = Follower::where('follower_id', $user->id)->pluck('user_id');
-            
+
             // Obtener posts solo de usuarios que sigue
             $posts = Post::whereIn('user_id', $followingIds)
+                         ->with('user')
+                         ->withCount(['likes', 'comments'])
                          ->latest()
                          ->paginate(20);
         } else {
             // Mostrar todos los posts (General)
-            $posts = Post::latest()->paginate(20);
+            $posts = Post::with('user')
+                         ->withCount(['likes', 'comments'])
+                         ->latest()
+                         ->paginate(20);
         }
         
         return view('home', compact('user', 'posts', 'filter'));

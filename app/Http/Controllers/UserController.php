@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index(User $user)
     {
-        $posts = Post::where('user_id', $user->id)->latest()->paginate(10);
+        $posts = Post::where('user_id', $user->id)->withCount(['likes', 'comments'])->latest()->paginate(10);
         
         // Check if the authenticated user is following this user
         $isFollowing = false;

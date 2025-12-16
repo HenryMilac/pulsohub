@@ -19,7 +19,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'description' => 'required|string|max:100',
+            'description' => 'required|string|max:200',
             'image' => 'nullable|string',
         ]);
 
@@ -41,9 +41,10 @@ class PostController extends Controller
     public function show(User $user, Post $post)
     {
         // Cargar las relaciones necesarias
-        $post->load(['likes', 'comments.user']);
-        
-        return view('posts.show', [
+        $post->load(['likes', 'comments.user'])
+             ->loadCount('comments');
+
+        return view('post-id', [
             'user' => $user,
             'post' => $post,
         ]);

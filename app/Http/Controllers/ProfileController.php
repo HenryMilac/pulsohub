@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class ProfileController extends Controller
 {
     public function index(){
-        return view('profile.edit');
+        return view('profile-edit');
     }
 
     public function update(Request $request){
