@@ -2,7 +2,8 @@
 
 @section('contenido')
     <div class="flex gap-5 py-5">
-        <div class="rounded-full h-36 w-36 flex-shrink-0 relative overflow-hidden border">
+        {{-- Image User --}}
+        <div class="rounded-full h-36 w-36 flex-shrink-0 relative overflow-hidden">
             @if($user->image)
                 <img src="{{ asset('profileimages/' . $user->image) }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
             @else

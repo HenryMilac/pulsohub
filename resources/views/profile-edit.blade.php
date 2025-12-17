@@ -2,17 +2,31 @@
 
 @section('contenido')
     <div class="">
-        <h1 class="text-xl font-bold my-2">Editar Perfil</h1>
+        <div class="flex justify-between pt-5 pb-10">
+            <h1 class="text-xl font-bold my-2">Editar Perfil</h1>
+            <livewire:theme-toggle />
+        </div>
 
         <form action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data" class="">
             @csrf
             @method('PUT')
             <input type="hidden" name="delete_image" id="delete_image" value="0">
             
-            <div class="flex gap-5">
-                {{-- ----- Image --}}
-                <div class="relative">
+            <div class="flex flex-col md:flex-row gap-5">
+                {{-- Section: Image --}}
+                <div class="relative mx-auto md:mx-0">
                     <input type="file" name="image" id="image" accept="image/*" class="hidden">
+
+                    {{-- Imagen --}}
+                    <div class="rounded-full h-40 w-40 overflow-hidden">
+                        @if(auth()->user()->image)
+                            <img src="{{ asset('profileimages/' . auth()->user()->image) }}" alt="Imagen actual" class="w-full h-full object-cover">
+                        @else
+                            <div class="w-full h-full flex items-center justify-center text-gray-500 text-7xl">
+                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                            </div>
+                        @endif
+                    </div>
 
                     {{-- Botón de editar --}}
                     <button type="button" onclick="document.getElementById('image').click()" class="bg-black text-white p-2 rounded-full cursor-pointer absolute bottom-2 right-0">
@@ -29,41 +43,29 @@
                             </svg>
                         </button>
                     @endif
-
-                    {{-- Imagen --}}
-                    <div class="rounded-full h-40 w-40 overflow-hidden">
-                        @if(auth()->user()->image)
-                            <img src="{{ asset('profileimages/' . auth()->user()->image) }}" alt="Imagen actual" class="w-full h-full object-cover">
-                        @else
-                            <div class="w-full h-full flex items-center justify-center text-gray-500 text-7xl">
-                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                            </div>
-                        @endif
-                    </div>
-                </div>
-                <div class="flex flex-col w-full gap-3">
-                    {{-- ----- Name --}}
-                    <div class="flex flex-col">
-                        <label for="image" class="text-sm text-gray-400">Nombres y Apellidos</label>
-                        <input type="text" name="name" id="name" placeholder="Nombre" value="{{ old('name', auth()->user()->name) }}" required  class="border border-gray-400 rounded-xl p-2">
-                        @error('name')<p class="text-red-500">{{$message}}</p>@enderror
-                    </div>
-                    {{-- ----- Theme Toggle --}}
-                    <div class="flex flex-col">
-                        <label class="text-sm text-gray-400">Tema</label>
-                        <livewire:theme-toggle />
-                    </div>
                 </div>
 
+                {{-- Section: Form --}}
+                <div class="w-full">
+                    <div class="flex flex-col w-full gap-3">
+                        {{-- ----- Name --}}
+                        <div class="flex flex-col">
+                            <label for="image" class="text-sm text-gray-400">Nombres y Apellidos</label>
+                            <input type="text" name="name" id="name" placeholder="Nombre" value="{{ old('name', auth()->user()->name) }}" required  class="border border-gray-400 rounded-xl p-2">
+                            @error('name')<p class="text-red-500">{{$message}}</p>@enderror
+                        </div>
+                    </div>
+                    {{-- ----- Buttons --}}
+                    <div class="flex gap-3 justify-end mt-5">
+                        <x-button-general type="submit">Guardar Cambios</x-button-general>
+                        <x-button-general type="button" onclick="window.location.href='{{ route('user.name', ['user' => auth()->user()->name]) }}'">Cancelar</x-button-general>
+                    </div>
+                </div>
             </div>
 
 
 
-            {{-- ----- Buttons --}}
-            <div class="flex gap-3 mt-10 justify-end">
-                <x-button-general type="submit">Guardar Cambios</x-button-general>
-                <x-button-general type="button" onclick="window.location.href='{{ route('user.name', ['user' => auth()->user()->name]) }}'">Cancelar</x-button-general>
-            </div>
+
         </form>
     </div>
 
