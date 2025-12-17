@@ -1,4 +1,4 @@
-<nav class="flex justify-between items-center p-5 border-b border-gray-300 bg-gray-100 opacity-90">
+<nav class="flex justify-between items-center p-5 border-b border-gray-300 bg-gray-100 dark:bg-gray-950 opacity-90">
     
     {{-- ---------- Logo --}}
     <a href="{{ route('home') }}" class="font-bold">PulsoHub</a>

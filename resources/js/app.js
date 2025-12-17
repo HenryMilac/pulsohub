@@ -2,6 +2,21 @@ import Dropzone from 'dropzone';
 
 Dropzone.autoDiscover = false;
 
+// Theme Toggle Listener
+document.addEventListener('livewire:init', () => {
+    Livewire.on('theme-changed', (event) => {
+        const theme = event.theme;
+
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        localStorage.setItem('theme', theme);
+    });
+});
+
 // Initialize Dropzone
 const dropzoneElement = document.getElementById('imageDropzone');
 if (dropzoneElement) {

@@ -30,7 +30,8 @@
                         </button>
                     @endif
 
-                    <div class="rounded-full h-40 w-40 overflow-hidden border">
+                    {{-- Imagen --}}
+                    <div class="rounded-full h-40 w-40 overflow-hidden">
                         @if(auth()->user()->image)
                             <img src="{{ asset('profileimages/' . auth()->user()->image) }}" alt="Imagen actual" class="w-full h-full object-cover">
                         @else
@@ -40,11 +41,18 @@
                         @endif
                     </div>
                 </div>
-                {{-- ----- Name --}}
-                <div class="flex flex-col w-full">
-                    <label for="image" class="text-sm text-gray-400">Nombres y Apellidos</label>
-                    <input type="text" name="name" id="name" placeholder="Nombre" value="{{ old('name', auth()->user()->name) }}" required  class="border border-gray-400 rounded-xl p-2">
-                    @error('name')<p class="text-red-500">{{$message}}</p>@enderror
+                <div class="flex flex-col w-full gap-3">
+                    {{-- ----- Name --}}
+                    <div class="flex flex-col">
+                        <label for="image" class="text-sm text-gray-400">Nombres y Apellidos</label>
+                        <input type="text" name="name" id="name" placeholder="Nombre" value="{{ old('name', auth()->user()->name) }}" required  class="border border-gray-400 rounded-xl p-2">
+                        @error('name')<p class="text-red-500">{{$message}}</p>@enderror
+                    </div>
+                    {{-- ----- Theme Toggle --}}
+                    <div class="flex flex-col">
+                        <label class="text-sm text-gray-400">Tema</label>
+                        <livewire:theme-toggle />
+                    </div>
                 </div>
 
             </div>

@@ -7,6 +7,21 @@
         {{-- TODO: Cambiar nombre de la app --}}
         <title>Laravel</title>
 
+        <!-- Theme Script - Must be before content loads to prevent flash -->
+        <script>
+            (function() {
+                const theme = '{{ auth()->check() ? auth()->user()->theme : "light" }}';
+
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+
+                localStorage.setItem('theme', theme);
+            })();
+        </script>
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
@@ -22,7 +37,7 @@
         @stack('styles')
         @livewireStyles
     </head>
-    <body class="bg-gray-100 text-gray-900 min-h-screen">
+    <body class="bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors">
         <div class="max-w-[700px] mx-auto">
             <span class="sticky top-0 z-10">
                 <x-navbar />
