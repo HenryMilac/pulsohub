@@ -39,10 +39,11 @@
     </head>
     <body class="bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors">
         <div class="max-w-[700px] mx-auto">
+            @unless(in_array(Route::currentRouteName(), ['login', 'register']))
             <span class="sticky top-0 z-10">
                 <x-navbar />
-
             </span>
+            @endunless
             <main class="px-5 pb-10">@yield('contenido')</main>
         </div>
         @livewireScripts
