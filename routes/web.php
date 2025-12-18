@@ -27,12 +27,14 @@ Route::middleware('auth')->group(function () {
     Route::put('/edit-profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/{user:name}/follow', [FollowerController::class, 'store'])->name('users.follow');
     Route::delete('/{user:name}/unfollow', [FollowerController::class, 'destroy'])->name('users.unfollow');
+    Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 });
-Route::get('/register', [RegisterController::class, 'index'])->name('register');
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/register', [RegisterController::class, 'store'])->name('register');
-Route::post('/login', [LoginController::class, 'store'])->name('login');
-Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [RegisterController::class, 'index'])->name('register');
+    Route::post('/register', [RegisterController::class, 'store']);
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'store']);
+});
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/{user:name}/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 Route::get('/{user:name}', [UserController::class, 'index'])->name('user.name');
