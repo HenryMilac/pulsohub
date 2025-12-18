@@ -6,9 +6,9 @@
         <a href="{{ route('user.name', $post->user) }}" class="inline-flex justify-between items-center gap-2">
             {{-- Image User --}}
             @if($post->user->image)
-                <img 
-                    src="{{ asset('profileimages/' . $post->user->image) }}" 
-                    alt="{{ $post->user->name }}" 
+                <img
+                    src="{{ asset('profileimages/' . $post->user->image) }}"
+                    alt="{{ $post->user->name }}"
                     class="w-10 h-10 rounded-full object-cover"
                 >
             @else
@@ -38,7 +38,8 @@
             <img
                 src="{{ asset('uploads/' . $post->image) }}"
                 alt="{{ $post->title }}"
-                class="w-full object-cover rounded-xl"
+                class="w-full object-cover rounded-xl cursor-pointer"
+                onclick="openImageModal(this.src, this.alt)"
             >
         @endif
     </span>
@@ -70,3 +71,52 @@
         </div>
     </div>
 </div>
+
+{{-- Section: Modal zoom image --}}
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden items-center justify-center p-4" onclick="closeImageModal()">
+    <div class="relative max-w-7xl max-h-full">
+        {{-- Botón cerrar --}}
+        <button
+            onclick="closeImageModal()"
+            class="absolute -top-10 right-0 text-white cursor-pointer z-10"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        {{-- Imagen --}}
+        <img
+            id="modalImage"
+            src=""
+            alt=""
+            class="max-w-full max-h-screen object-contain rounded-lg"
+            onclick="event.stopPropagation()"
+        >
+    </div>
+</div>
+
+<script>
+    function openImageModal(src, alt) {
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        modalImage.src = src;
+        modalImage.alt = alt;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeImageModal() {
+        const modal = document.getElementById('imageModal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = '';
+    }
+
+    // Cerrar modal con tecla ESC
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeImageModal();
+        }
+    });
+</script>
