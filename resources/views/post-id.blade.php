@@ -122,7 +122,7 @@
             @csrf
             <input type="hidden" name="post_id" value="{{ $post->id }}">
             <textarea type="text" name="comment" placeholder="Agregar comentario" class="w-full border border-gray-400 rounded-xl p-2 focus:outline-none">{{old('comment')}}</textarea>
-            <x-button-general type="submit">Agregar comentario</x-button-general>
+            <x-buttons.button type="submit">Agregar comentario</x-buttons.button>
         </form>
         @endauth
     </div>

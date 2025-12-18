@@ -59,12 +59,12 @@
                     <form action="{{ route('users.unfollow', $user) }}" method="POST" class="">
                         @csrf
                         @method('DELETE')
-                        <x-button-general type="submit">Dejar de seguir</x-button-general>
+                        <x-buttons.button type="submit">Dejar de seguir</x-buttons.button>
                     </form>
                     @else
                     <form action="{{ route('users.follow', $user) }}" method="POST" class="">
                         @csrf
-                        <x-button-general type="submit">Seguir</x-button-general>
+                        <x-buttons.button type="submit">Seguir</x-buttons.button>
                     </form>
                 @endif
             @endif

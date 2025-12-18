@@ -18,7 +18,7 @@
                 <input type="checkbox" name="remember" id="remember" class="w-3 h-3">
                 <label for="remember" class="text-sm text-gray-400 cursor-pointer">Recordar sesión</label>
             </div>
-            <x-button-general type="submit">Iniciar Sesión</x-button-general>
+            <x-buttons.button type="submit">Iniciar Sesión</x-buttons.button>
         </form>
         <div class="flex gap-2 justify-center py-5">
             <p>¿No tienes una cuenta?</p>

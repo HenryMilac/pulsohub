@@ -33,7 +33,7 @@
                 <input type="hidden" name="image" id="imageInput" value="{{old('image')}}">
             </div>
             {{-- Button Create a post --}}
-            <x-button-general type="submit">Crear Post</x-button-general>
+            <x-buttons.button type="submit">Crear Post</x-buttons.button>
         </div>
 
         {{-- Image Error Message --}}

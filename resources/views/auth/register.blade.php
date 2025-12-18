@@ -22,7 +22,7 @@
             <input type="password" name="password_confirmation" placeholder="Confirmar contraseña" class="border border-gray-400 rounded-xl p-2 w-full">
             @error('password_confirmation')<p class="text-red-500 text-sm">{{$message}}</p>@enderror
         </div>
-        <x-button-general type="submit">Registrarse</x-button-general>
+        <x-buttons.button type="submit">Registrarse</x-buttons.button>
         </form>
         <div class="flex gap-2 justify-center py-5">
             <p>¿Ya tienes una cuenta?</p>

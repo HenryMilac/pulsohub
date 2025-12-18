@@ -57,8 +57,8 @@
                     </div>
                     {{-- ----- Buttons --}}
                     <div class="flex gap-3 justify-end mt-5">
-                        <x-button-general type="submit">Guardar Cambios</x-button-general>
-                        <x-button-general type="button" onclick="window.location.href='{{ route('user.name', ['user' => auth()->user()->name]) }}'">Cancelar</x-button-general>
+                        <x-buttons.button type="submit">Guardar Cambios</x-buttons.button>
+                        <x-buttons.button type="button" onclick="window.location.href='{{ route('user.name', ['user' => auth()->user()->name]) }}'">Cancelar</x-buttons.button>
                     </div>
                 </div>
             </div>
