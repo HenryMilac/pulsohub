@@ -10,6 +10,10 @@ class LikePost extends Component
 
     public function like()
     {
+        if (!auth()->check()) {
+            return;
+        }
+
         if (!$this->post->checkLike(auth()->user())) {
             $this->post->likes()->create([
                 'user_id' => auth()->user()->id,
@@ -20,6 +24,10 @@ class LikePost extends Component
 
     public function unlike()
     {
+        if (!auth()->check()) {
+            return;
+        }
+
         if ($this->post->checkLike(auth()->user())) {
             $this->post->likes()->where('user_id', auth()->user()->id)->delete();
             $this->post->refresh();
