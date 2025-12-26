@@ -13,10 +13,10 @@ class HomeController extends Controller
     {
         // Obtener el usuario autenticado
         $user = Auth::user();
-        
+
         // Determinar qué filtro aplicar
         $filter = $request->get('filter', 'general');
-        
+
         if ($filter === 'following') {
             // Obtener IDs de usuarios que sigue el usuario actual
             $followingIds = Follower::where('follower_id', $user->id)->pluck('user_id');
@@ -26,15 +26,35 @@ class HomeController extends Controller
                          ->with('user')
                          ->withCount(['likes', 'comments'])
                          ->latest()
-                         ->paginate(20);
+                         ->paginate(10);
         } else {
             // Mostrar todos los posts (General)
             $posts = Post::with('user')
                          ->withCount(['likes', 'comments'])
                          ->latest()
-                         ->paginate(20);
+                         ->paginate(10);
         }
-        
+
+        // Si es una petición AJAX, devolver solo el HTML de los posts
+        if ($request->ajax()) {
+            $html = '';
+            foreach ($posts as $post) {
+                $html .= view('components.post-home', ['post' => $post])->render();
+            }
+
+            // Preservar el filtro en la URL de la siguiente página
+            $nextPageUrl = $posts->nextPageUrl();
+            if ($nextPageUrl && $filter !== 'general') {
+                $nextPageUrl .= '&filter=' . $filter;
+            }
+
+            return response()->json([
+                'html' => $html,
+                'next_page' => $nextPageUrl,
+                'has_more' => $posts->hasMorePages(),
+            ]);
+        }
+
         return view('home', compact('user', 'posts', 'filter'));
     }
 }

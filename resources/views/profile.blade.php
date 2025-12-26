@@ -73,7 +73,7 @@
     </div>
 
     <div>
-        <p class="text-xl font-bold mb-2">{{ $posts->count() }} Publicaciones</p>
+        <p class="text-xl font-bold mb-2">{{ $posts->total() }} @choice('Publicación|Publicaciones', $posts->total())</p>
         @auth
         @if(auth()->id() === $user->id)
             <div class="mb-5">
@@ -81,18 +81,108 @@
             </div>
         @endif
         @endauth
-        
+
         {{-- ---------- Posts --}}
         @if ($posts->count() > 0)
-            <div class="grid grid-cols-1 gap-5">
+            <div id="posts-container" class="grid grid-cols-1 gap-5">
                 @foreach ($posts as $post)
                 <x-post-profile :post="$post" />
                 @endforeach
             </div>
-            {{-- ---------- Page Next --}}
-            {{-- <div class="flex justify-center py-10">
-                {{$posts->links('pagination::simple-tailwind')}}
-            </div> --}}
+
+            {{-- Loading Indicator --}}
+            <div id="loading-indicator" class="hidden pt-5 text-center">
+                <svg class="animate-spin h-5 w-5 mx-auto text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            </div>
+
+            {{-- Sentinel Element for Intersection Observer --}}
+            <div id="scroll-sentinel"></div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const container = document.getElementById('posts-container');
+                    const sentinel = document.getElementById('scroll-sentinel');
+                    const loading = document.getElementById('loading-indicator');
+
+                    let nextPage = {!! json_encode($posts->nextPageUrl()) !!};
+                    let isLoading = false;
+                    let hasMore = {{ $posts->hasMorePages() ? 'true' : 'false' }};
+
+                    function stopLoading() {
+                        observer.disconnect();
+                        sentinel.classList.add('hidden');
+                        loading.classList.add('hidden');
+                        hasMore = false;
+                        nextPage = null;
+                    }
+
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting && hasMore && nextPage && !isLoading) {
+                                loadMorePosts();
+                            }
+                        });
+                    }, {
+                        rootMargin: '100px'
+                    });
+
+                    if (hasMore && nextPage) {
+                        observer.observe(sentinel);
+                    } else {
+                        stopLoading();
+                    }
+
+                    function loadMorePosts() {
+                        if (!nextPage || !hasMore || isLoading) return;
+
+                        isLoading = true;
+                        loading.classList.remove('hidden');
+
+                        fetch(nextPage, {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(response => {
+                            if (!response.ok) throw new Error('Network response was not ok');
+                            return response.json();
+                        })
+                        .then(data => {
+                            isLoading = false;
+                            loading.classList.add('hidden');
+
+                            if (data.html && data.html.trim() !== '') {
+                                container.insertAdjacentHTML('beforeend', data.html);
+
+                                // Reinicializar Livewire para los nuevos componentes
+                                if (window.Livewire) {
+                                    window.Livewire.rescan();
+                                }
+                            }
+
+                            // Actualizar estado
+                            nextPage = data.next_page || null;
+                            hasMore = data.has_more === true;
+
+                            // Detener si no hay más páginas
+                            if (!hasMore || !nextPage) {
+                                stopLoading();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error loading posts:', error);
+                            isLoading = false;
+                            loading.classList.add('hidden');
+                            // En caso de error, detener el scroll infinito
+                            stopLoading();
+                        });
+                    }
+                });
+            </script>
         @else
             <p class="text-center">No tienes publicaciones aún</p>
         @endif
