@@ -3,7 +3,7 @@
 <div class="flex flex-col gap-2">
     {{-- Section: Image & Name User & Date Post --}}
     <div class="flex justify-between items-center">
-        <a href="{{ route('user.name', $post->user) }}" class="inline-flex justify-between items-center gap-2">
+        <a href="{{ route('user.profile', $post->user->username) }}" class="inline-flex justify-between items-center gap-2">
             {{-- Image User --}}
             @if($post->user->image)
                 <img

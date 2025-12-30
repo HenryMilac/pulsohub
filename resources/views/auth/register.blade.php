@@ -18,6 +18,14 @@
                     @enderror
                 </div>
                 <div>
+                    <input type="text" name="username" placeholder="Usuario"
+                        class="border border-gray-400 rounded-xl p-2 w-full @error('username') border-red-500 @enderror"
+                        value="{{ old('username') }}">
+                    @error('username')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
                     <input type="email" name="email" placeholder="Email"
                         class="border border-gray-400 rounded-xl p-2 w-full @error('email') border-red-500 @enderror"
                         value="{{ old('email') }}">

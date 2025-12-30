@@ -1,4 +1,4 @@
-<div class="relative mx-auto md:mx-0">
+<div class="relative mx-auto md:mx-0 self-start">
     {{-- Hidden file input --}}
     <input
         type="file"

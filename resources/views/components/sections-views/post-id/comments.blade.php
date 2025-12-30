@@ -8,7 +8,7 @@
     <div class="flex flex-col gap-3">
         @forelse ($post->comments as $comment)
             <div class="border-b border-gray-400 pb-2">
-                <a href="{{ route('user.name', $comment->user) }}" class="inline-flex items-center gap-1 cursor-pointer">
+                <a href="{{ route('user.profile', $comment->user->username) }}" class="inline-flex items-center gap-1 cursor-pointer">
                     {{-- Image User --}}
                     @if($comment->user && $comment->user->image)
                         <img 

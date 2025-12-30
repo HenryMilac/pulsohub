@@ -2,7 +2,7 @@
 
 <div class="border-b border-gray-400 pb-2 space-y-2">
     {{-- ---------- User information: Image, Name, Date --}}
-    <a href="{{ route('user.name', $post->user) }}" class="flex justify-between w-full items-center gap-2">
+    <a href="{{ route('user.profile', $post->user->username) }}" class="flex justify-between w-full items-center gap-2">
         <div class="flex items-center gap-2">
             {{-- Image user --}}
             @if($post->user->image)

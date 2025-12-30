@@ -14,8 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         // Redirect authenticated users trying to access guest pages to their profile
         $middleware->redirectUsersTo(function () {
-            // TODO: ver si redijira con el name o username, ya que username será unico y name puede haber varios iguales
-            return route('user.name', Auth::user()->name);
+            return route('user.profile', Auth::user()->username);
         });
     })
     ->withExceptions(function (Exceptions $exceptions): void {

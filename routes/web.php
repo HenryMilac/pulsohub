@@ -25,8 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/likes/{like}', [LikeController::class, 'destroy'])->name('likes.destroy');
     Route::get('/profile-edit', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('/profile-edit', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/{user:name}/follow', [FollowerController::class, 'store'])->name('users.follow');
-    Route::delete('/{user:name}/unfollow', [FollowerController::class, 'destroy'])->name('users.unfollow');
+    Route::post('/{user:username}/follow', [FollowerController::class, 'store'])->name('users.follow');
+    Route::delete('/{user:username}/unfollow', [FollowerController::class, 'destroy'])->name('users.unfollow');
     Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 });
 Route::middleware('guest')->group(function () {
@@ -36,5 +36,5 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'store']);
 });
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/{user:name}/posts/{post}', [PostController::class, 'show'])->name('posts.show');
-Route::get('/{user:name}', [UserController::class, 'index'])->name('user.name');
+Route::get('/{user:username}/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/{user:username}', [UserController::class, 'index'])->name('user.profile');

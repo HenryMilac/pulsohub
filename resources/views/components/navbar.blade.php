@@ -6,7 +6,7 @@
     {{-- ---------- Name User | Login & Register --}}
     <div class="flex gap-3">
         @auth
-            <a href="{{ auth()->check() ? route('user.name', auth()->user()) : '/login' }}">Hola {{explode(' ', auth()->user()->name)[0]}}</a>
+            <a href="{{ auth()->check() ? route('user.profile', auth()->user()->username) : '/login' }}">Hola {{explode(' ', auth()->user()->name)[0]}}</a>
         @endauth
         @guest
             <a href="/login">Login</a>
