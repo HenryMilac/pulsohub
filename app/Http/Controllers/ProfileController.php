@@ -14,44 +14,32 @@ class ProfileController extends Controller
 
     public function update(Request $request){
         $request->validate([
-            'name' => 'required|string|max:255|unique:users,name,' . Auth::id(),
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:20|unique:users,username,' . Auth::id(),
+            'date_of_birth' => 'nullable|date|before:today',
+            'genre' => 'nullable|string|in:male,female,other',
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'name.max' => 'El nombre no puede tener más de 255 caracteres.',
+
+            'username.required' => 'El usuario es obligatorio.',
+            'username.max' => 'El usuario no puede tener más de 20 caracteres.',
+            'username.unique' => 'Este usuario ya está en uso.',
+
+            'date_of_birth.date' => 'La fecha de nacimiento debe ser una fecha válida.',
+            'date_of_birth.before' => 'La fecha de nacimiento debe ser anterior a hoy.',
+
+            'genre.in' => 'El género seleccionado no es válido.',
         ]);
 
         $user = Auth::user();
         $user->name = $request->name;
-
-        // Handle image deletion
-        if ($request->delete_image == '1') {
-            // Delete old image if exists (same as PostController approach)
-            if ($user->image) {
-                $imagePath = public_path('profileimages/' . $user->image);
-                if (file_exists($imagePath)) {
-                    unlink($imagePath);
-                }
-            }
-            $user->image = null;
-        }
-        // Handle image upload
-        elseif ($request->hasFile('image')) {
-            // Delete old image if exists (same as PostController approach)
-            if ($user->image) {
-                $imagePath = public_path('profile_images/' . $user->image);
-                if (file_exists($imagePath)) {
-                    unlink($imagePath);
-                }
-            }
-
-            // Store new image in public/profileimages (same as PostController approach)
-            $image = $request->file('image');
-            $imageName = Str::uuid() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('profileimages'), $imageName);
-            $user->image = $imageName;
-        }
-
+        $user->username = $request->username;
+        $user->date_of_birth = $request->date_of_birth;
+        $user->genre = $request->genre;
         $user->save();
 
-        return redirect()->route('user.name', ['user' => $user->name])
+        return redirect()->route('user.profile', ['user' => $user->username])
             ->with('success', 'Perfil actualizado correctamente');
     }
 }

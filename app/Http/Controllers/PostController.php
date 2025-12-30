@@ -31,7 +31,7 @@ class PostController extends Controller
                 "user_id" => Auth::id(),
             ]);
 
-            return redirect()->route('user.name', Auth::user())->with('success', 'Post creado exitosamente');
+            return redirect()->route('user.profile', Auth::user()->username)->with('success', 'Post creado exitosamente');
 
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['error' => 'Error al crear el post: ' . $e->getMessage()]);
@@ -59,6 +59,6 @@ class PostController extends Controller
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
-        return redirect()->route('user.name', Auth::user())->with('success', 'Post eliminado exitosamente');
+        return redirect()->route('user.profile', Auth::user()->username)->with('success', 'Post eliminado exitosamente');
     }
 }
