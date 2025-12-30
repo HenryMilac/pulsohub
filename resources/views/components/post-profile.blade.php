@@ -1,6 +1,6 @@
 @props(['post'])
 
-<div class="border-t border-gray-400 pt-2 space-y-2">
+<div class="border-b border-gray-400 pb-2 space-y-2">
     {{-- ---------- Post information: Description --}}
     <a href="{{ route('posts.show', [
         'user' => $post->user,

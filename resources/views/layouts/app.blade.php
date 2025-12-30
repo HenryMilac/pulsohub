@@ -24,7 +24,7 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=instrument-sans:200,400,500,600" rel="stylesheet" />
 
         <!-- Styles / Scripts -->
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
@@ -44,7 +44,7 @@
                 <x-navbar />
             </span>
             @endunless
-            <main class="px-5 pb-10">@yield('contenido')</main>
+            <main class="px-5">@yield('contenido')</main>
         </div>
         @livewireScripts
     </body>

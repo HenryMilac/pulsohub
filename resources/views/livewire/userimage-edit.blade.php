@@ -9,23 +9,23 @@
     >
 
     {{-- Image Display --}}
-    <div class="rounded-full h-40 w-40 overflow-hidden" wire:loading.class="opacity-50" wire:target="image">
+    <div class="w-40 h-40 flex-shrink-0 relative overflow-hidden" wire:loading.class="opacity-50" wire:target="image">
         @if($currentImage)
             <img
                 src="{{ asset('profileimages/' . $currentImage) }}"
                 alt="Imagen de perfil"
-                class="w-full h-full object-cover"
+                class="w-full h-full rounded-full object-cover"
             >
         @else
-            <div class="w-full h-full flex items-center justify-center text-gray-500 text-7xl">
+            <div class="w-full h-full rounded-full flex items-center justify-center text-gray-300 text-5xl border border-gray-300">
                 {{ $userInitial }}
             </div>
         @endif
-    </div>
 
-    {{-- Loading Spinner --}}
-    <div wire:loading wire:target="image" class="absolute inset-0 flex items-center justify-center">
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+        {{-- Loading Spinner --}}
+        <div wire:loading wire:target="image" class="absolute inset-0 flex items-center justify-center">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+        </div>
     </div>
 
     {{-- Edit Button --}}

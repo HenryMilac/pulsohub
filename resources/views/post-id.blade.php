@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('contenido')
-    <div class="flex flex-col gap-5 my-5 relative">
+    <div class="flex flex-col gap-5 mt-5 relative">
         {{-- Section: Details --}}
         <x-sections-views.post-id.details :post="$post" />
         

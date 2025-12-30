@@ -3,15 +3,20 @@
 @section('contenido')
     <div class="flex gap-5 py-5">
         {{-- Image User --}}
-        <div class="rounded-full h-36 w-36 flex-shrink-0 relative overflow-hidden">
+        <div class="flex-shrink-0 relative overflow-hidden">
             @if($user->image)
-                <img src="{{ asset('profileimages/' . $user->image) }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
+                <img 
+                    src="{{ asset('profileimages/' . $user->image) }}" 
+                    alt="{{ $user->name }}" 
+                    class="w-36 h-36 rounded-full object-cover"
+                >
             @else
-                <div class="w-full h-full flex items-center justify-center text-gray-500 text-5xl">
+                <div class="w-36 h-36 rounded-full flex items-center justify-center text-gray-300 text-5xl border border-gray-300">
                     {{ strtoupper(substr($user->name, 0, 1)) }}
                 </div>
             @endif
         </div>
+        {{-- Name User & Follows & Icon points --}}
         <div class="space-y-2 w-full">
             <div class="flex flex-col">
                 <div class="flex justify-between">
@@ -73,6 +78,7 @@
     </div>
 
     <div>
+        {{-- Create a new post --}}
         <p class="text-xl font-bold mb-2">{{ $posts->total() }} @choice('Publicación|Publicaciones', $posts->total())</p>
         @auth
         @if(auth()->id() === $user->id)
@@ -82,9 +88,9 @@
         @endif
         @endauth
 
-        {{-- ---------- Posts --}}
+        {{-- Posts --}}
         @if ($posts->count() > 0)
-            <div id="posts-container" class="grid grid-cols-1 gap-5">
+            <div id="posts-container" class="flex flex-col gap-5 mt-5">
                 @foreach ($posts as $post)
                 <x-post-profile :post="$post" />
                 @endforeach

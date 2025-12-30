@@ -1,6 +1,6 @@
 @props(['post'])
 
-<div class="border-t border-gray-400 pt-2 space-y-2">
+<div class="border-b border-gray-400 pb-2 space-y-2">
     {{-- ---------- User information: Image, Name, Date --}}
     <a href="{{ route('user.name', $post->user) }}" class="flex justify-between w-full items-center gap-2">
         <div class="flex items-center gap-2">
@@ -8,7 +8,7 @@
             @if($post->user->image)
                 <img src="{{ asset('profileimages/' . $post->user->image) }}" alt="{{ $post->user->name }}" class="w-10 h-10 rounded-full object-cover">
             @else
-            <div class="w-10 h-10 rounded-full flex items-center justify-center text-gray-500 text-lg border">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center text-gray-300 text-lg  border border-gray-300">
                 {{ strtoupper(substr($post->user->name, 0, 1)) }}
             </div>
             @endif

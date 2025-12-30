@@ -8,7 +8,6 @@
         </div>
 
         <div class="flex flex-col md:flex-row gap-5">
-            {{-- Section: Image (Independent Livewire Component) --}}
             <livewire:user-image-edit />
 
             {{-- Section: Form --}}

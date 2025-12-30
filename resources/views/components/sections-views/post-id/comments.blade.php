@@ -1,13 +1,13 @@
 @props(['post'])
 
-<div class="flex flex-col gap-5">
+<div class="flex flex-col gap-3">
     {{-- Title --}}
-    <p class="text-xl font-bold">Comentarios:</p>
+    <p class="text-xl font-bold">Comentarios</p>
 
     {{-- Section: Comment User --}}
     <div class="flex flex-col gap-3">
         @forelse ($post->comments as $comment)
-            <div class="border-t border-gray-400 pt-2">
+            <div class="border-b border-gray-400 pb-2">
                 <a href="{{ route('user.name', $comment->user) }}" class="inline-flex items-center gap-1 cursor-pointer">
                     {{-- Image User --}}
                     @if($comment->user && $comment->user->image)
@@ -17,7 +17,7 @@
                             class="w-7 h-7 rounded-full object-cover"
                         >
                     @else
-                        <div class="w-7 h-7 rounded-full flex items-center justify-center text-gray-500 text-sm border">
+                        <div class="w-7 h-7 rounded-full flex items-center justify-center text-gray-300 text-sm border border-gray-300">
                             {{ strtoupper(substr($comment->user->name ?? 'U', 0, 1)) }}
                         </div>
                     @endif
