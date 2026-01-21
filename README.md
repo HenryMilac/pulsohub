@@ -1,61 +1,205 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🚀 PulsoHub
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<div align="center">
+  
+![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![Livewire](https://img.shields.io/badge/Livewire-4E56A6?style=for-the-badge&logo=livewire&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+</div>
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📋 Descripción
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+PulsoHub es una red social full-stack desarrollada con Laravel que permite a los usuarios crear perfiles, publicar contenido, interactuar con otros usuarios y construir una comunidad. El proyecto demuestra el dominio de conceptos clave del desarrollo web moderno, incluyendo autenticación, CRUD operations, relaciones de base de datos y componentes reactivos.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## ✨ Características
 
-## Learning Laravel
+### 👤 Gestión de Usuarios
+- ✅ Sistema completo de autenticación (registro, login, logout)
+- ✅ Perfiles de usuario personalizables
+- ✅ Edición de perfil (nombre, biografía, foto de perfil)
+- ✅ Sistema de seguimiento entre usuarios (follow/unfollow)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 📝 Gestión de Publicaciones
+- ✅ Crear, editar y eliminar posts
+- ✅ Feed principal con posts de todos los usuarios
+- ✅ Vista de perfil con posts del usuario específico
+- ✅ Vista detallada individual de cada post
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 💬 Interacciones Sociales
+- ✅ Sistema de likes en publicaciones
+- ✅ Comentarios en posts
+- ✅ Visualización de actividad del usuario
+- ✅ Contador de seguidores y seguidos
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠 Tecnologías
 
-## Laravel Sponsors
+### Backend
+- **Laravel** - Framework PHP moderno y robusto
+- **MySQL** - Sistema de gestión de base de datos
+- **Livewire** - Componentes dinámicos sin escribir JavaScript
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Frontend
+- **Tailwind CSS** - Framework CSS utility-first
+- **Blade Templates** - Motor de plantillas de Laravel
+- **Vite** - Build tool para desarrollo rápido
 
-### Premium Partners
+### Herramientas de Desarrollo
+- **Laravel Vite Plugin** - Integración de Vite con Laravel
+- **Composer** - Gestor de dependencias PHP
+- **NPM** - Gestor de paquetes Node.js
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🚀 Instalación
 
-## Contributing
+### Requisitos Previos
+- PHP >= 8.2
+- Composer
+- Node.js
+- MySQL
+- Git
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Pasos de Instalación
 
-## Code of Conduct
+1. **Clonar el repositorio**
+```bash
+git clone https://github.com/tu-usuario/pulsohub.git
+cd pulsohub
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. **Instalar dependencias de PHP**
+```bash
+composer install
+```
 
-## Security Vulnerabilities
+3. **Instalar dependencias de Node.js**
+```bash
+npm install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+4. **Configurar variables de entorno**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## License
+5. **Configurar la base de datos**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Edita el archivo `.env` con tus credenciales de MySQL:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=pulsohub
+DB_USERNAME=tu_usuario
+DB_PASSWORD=tu_contraseña
+```
+
+6. **Crear la base de datos**
+```bash
+mysql -u root -p
+CREATE DATABASE pulsohub;
+exit;
+```
+
+7. **Ejecutar migraciones**
+```bash
+php artisan migrate
+```
+
+8. **(Opcional) Generar datos de prueba**
+```bash
+php artisan db:seed
+```
+
+9. **Compilar assets**
+```bash
+npm run dev
+```
+
+10. **Iniciar el servidor de desarrollo**
+
+**Si usas Laravel Valet:**
+```bash
+valet link pulsohub
+```
+La aplicación estará disponible en: `http://pulsohub.test/home`
+
+**Si no usas Valet:**
+
+En una terminal separada:
+```bash
+php artisan serve
+```
+La aplicación estará disponible en: `http://localhost:8000`
+## 💻 Uso
+
+### Crear una Cuenta
+1. Navega a la página de registro
+2. Completa el formulario con tus datos
+3. Inicia sesión con tus credenciales
+
+### Crear un Post
+1. Ve a tu perfil
+2. Escribe tu contenido
+3. Haz clic en "Crear Post"
+3. Publica y aparecerá en el feed principal
+
+### Interactuar con Usuarios
+1. Explora posts en el home
+2. Dale like a publicaciones que te gusten
+3. Comenta en posts de otros usuarios
+4. Visita perfiles y sigue a otros usuarios
+
+### Editar tu Perfil
+1. Ve a tu perfil
+2. Haz clic en el ícono de los 3 puntos y luego en "Editar Perfil"
+3. Actualiza tu información y foto
+4. Guarda los cambios
+
+## 📸 Capturas de Pantalla
+
+### Home - Feed Principal
+![Home Feed](screenshots/home.png)
+*Vista principal con todos los posts de los usuarios*
+
+### Perfil de Usuario
+![User Profile](screenshots/profile.png)
+*Perfil mostrando posts del usuario*
+
+### Detalle de Post
+![Post Detail](screenshots/post-detail.png)
+*Vista completa de un post con likes y comentarios*
+
+### Editar Perfil
+![Edit Profile](screenshots/edit-profile.png)
+*Interfaz para actualizar información del usuario*
+
+## 🗃 Modelo de Base de Datos
+
+### Tablas Principales
+- **users** - Información de usuarios (nombre, email, foto, biografía)
+- **posts** - Publicaciones de usuarios
+- **comments** - Comentarios en posts
+- **likes** - Likes en publicaciones
+- **follows** - Relaciones de seguimiento entre usuarios
+
+### Relaciones
+- Un usuario puede tener muchos posts
+- Un usuario puede tener muchos comentarios
+- Un usuario puede dar muchos likes
+- Un usuario puede seguir a muchos usuarios
+- Un post puede tener muchos comentarios
+- Un post puede tener muchos likes
+
+
+---
+
+<div align="center">
+  
+  **⭐ Si te gusta este proyecto, no olvides darle una estrella en GitHub ⭐**
+  
+  Desarrollado con ❤️ usando Laravel
+  
+</div>
